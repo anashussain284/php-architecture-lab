@@ -4,11 +4,15 @@ declare(strict_types=1);
 namespace App\Services\Engines;
 
 use App\Contracts\EngineFeature;
+use App\Models\Specification;
 
 final class DieselEngine implements EngineFeature
 {
-	public function engineSpecification(): string
+	public function specification(): Specification
 	{
-		return '5.0L Diesel Engine';
+		return new Specification(
+			label: 'Engine',
+			value: 'Diesel Engine'
+		);
 	}
 }

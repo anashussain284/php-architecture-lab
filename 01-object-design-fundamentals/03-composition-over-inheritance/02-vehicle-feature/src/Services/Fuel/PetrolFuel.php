@@ -4,11 +4,15 @@ declare(strict_types=1);
 namespace App\Services\Fuel;
 
 use App\Contracts\FuelFeature;
+use App\Models\Specification;
 
 final class PetrolFuel implements FuelFeature
 {
-	public function fuelType(): string
+	public function specification(): Specification
 	{
-		return 'Petrol';
+		return new Specification(
+			label: 'Fuel',
+			value: 'Petrol'
+		);
 	}
 }

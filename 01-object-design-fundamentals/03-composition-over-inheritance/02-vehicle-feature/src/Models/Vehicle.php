@@ -3,53 +3,26 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Contracts\EngineFeature;
-use App\Contracts\FuelFeature;
-use App\Contracts\EntertainmentFeature;
-use App\Contracts\NavigationFeature;
-use App\Contracts\SafetyFeature;
-
-use App\Contracts\TransmissionFeature;
+use App\Contracts\VehicleFeature;
 
 final class Vehicle
 {
+	private array $features = [];
+
 	public function __construct(
 		public readonly string $name,
-		private readonly EngineFeature $engine,
-		private readonly FuelFeature $fule,
-		private readonly EntertainmentFeature $entertainment,
-		private readonly NavigationFeature $navigation,
-		private readonly SafetyFeature $safety,
-		private readonly TransmissionFeature $transmission
-	) {}
-
-	public function engine(): string
-	{
-		return $this->engine->engineSpecification();
+		VehicleFeature ...$features
+	) {
+		foreach ($features as $feature) {
+			$this->features[$feature::class] = $feature;
+		}
 	}
 
-	public function fuel(): string
+	public function specifications(): array
 	{
-		return $this->fule->fuelType();
-	}
-
-	public function entertainment()
-	{
-		return $this->entertainment->description();
-	}
-
-	public function navigation()
-	{
-		return $this->navigation->routeMap();
-	}
-
-	public function safety()
-	{
-		return $this->safety->description();
-	}
-
-	public function transmission()
-	{
-		return $this->transmission->type();
+		return array_map(
+			static fn(VehicleFeature $feature): Specification => $feature->specification(),
+			array_values($this->features)
+		);
 	}
 }

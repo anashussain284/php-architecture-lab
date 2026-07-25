@@ -7,21 +7,15 @@ use App\Models\Vehicle;
 
 final class VehiclePresenter
 {
-	public function show(Vehicle $vehicle)
+	public function show(Vehicle $vehicle): void
 	{
-		echo <<<TEXT
+		echo PHP_EOL . "VEHICLE DETAILS" . PHP_EOL;
+		echo "-----------------" . PHP_EOL;
+		echo sprintf("%-15s: %s", "Name", $vehicle->name) . PHP_EOL;
 
-VEHICLE DETAILS
------------------
-Name         : {$vehicle->name}
-Engine       : {$vehicle->engine()}
-Fuel         : {$vehicle->fuel()}
-Entertainment: {$vehicle->entertainment()}
-Navigation   : {$vehicle->navigation()}
-Safety       : {$vehicle->safety()}
-Transmission : {$vehicle->transmission()}
-
-
-TEXT;
+		foreach ($vehicle->specifications() as $spec) {
+			echo sprintf("%-15s: %s", $spec->label, $spec->value) . PHP_EOL;
+		}
+		echo PHP_EOL;
 	}
 }

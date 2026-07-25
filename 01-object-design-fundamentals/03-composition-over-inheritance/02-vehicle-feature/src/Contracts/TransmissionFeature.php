@@ -3,7 +3,4 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-interface TransmissionFeature
-{
-	public function type(): string;
-}
+interface TransmissionFeature extends VehicleFeature {}
