@@ -1,0 +1,50 @@
+classDiagram
+    class PaymentProcessorInterface {
+        <<interface>>
+        +process(Order order): array
+        +refund(Order order): array
+        +cancel(Order order): bool
+    }
+    
+    class StripePaymentProcessor {
+        +process(Order order): array
+        +refund(Order order): array
+        +cancel(Order order): bool
+    }
+    
+    class PayPalPaymentProcessor {
+        +process(Order order): array
+        +refund(Order order): array
+        +cancel(Order order): bool
+    }
+    
+    class BankTransferProcessor {
+        +process(Order order): array
+        +refund(Order order): array
+        +cancel(Order order): bool
+    }
+    
+    class CryptoPaymentProcessor {
+        +process(Order order): array
+        +refund(Order order): array
+        +cancel(Order order): bool
+    }
+    
+    class PaymentService {
+        -PaymentProcessorInterface $processor
+        +__construct(PaymentProcessorInterface $processor)
+        +processPayment(Order order): array
+    }
+    
+    class PaymentProcessorFactory {
+        +make(string $type): PaymentProcessorInterface
+    }
+    
+    PaymentProcessorInterface <|-- StripePaymentProcessor : implements
+    PaymentProcessorInterface <|-- PayPalPaymentProcessor : implements
+    PaymentProcessorInterface <|-- BankTransferProcessor : implements
+    PaymentProcessorInterface <|-- CryptoPaymentProcessor : implements
+    
+    PaymentService --> PaymentProcessorInterface : depends on
+    PaymentService o-- PaymentProcessorFactory : uses
+    PaymentProcessorFactory ..> PaymentProcessorInterface : creates
