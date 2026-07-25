@@ -1,0 +1,53 @@
+classDiagram
+    class OrderService {
+        -OrderRepository $orderRepository
+        -PaymentGatewayInterface $paymentGateway
+        -NotificationService $notificationService
+        -InventoryService $inventoryService
+        +createOrder(data): Order
+        +fulfillOrder(order): void
+        +processReturn(order, items): void
+    }
+    
+    class PaymentGatewayInterface {
+        <<interface>>
+        +charge(amount, currency): array
+        +refund(transactionId, amount): array
+    }
+    
+    class StripeGateway {
+        +charge(amount, currency): array
+        +refund(transactionId, amount): array
+    }
+    
+    class PayPalGateway {
+        +charge(amount, currency): array
+        +refund(transactionId, amount): array
+    }
+    
+    class NotificationService {
+        -EmailSender $emailSender
+        -SmsSender $smsSender
+        -SlackSender $slackSender
+        +sendNotification(user, message): void
+    }
+    
+    class InventoryService {
+        -ProductRepository $productRepository
+        -CacheManager $cache
+        +checkAvailability(productId, quantity): bool
+        +updateStock(productId, quantity): void
+    }
+    
+    class OrderRepository {
+        +save(order): void
+        +find(id): Order
+    }
+    
+    OrderService --> PaymentGatewayInterface : depends on
+    OrderService --> NotificationService : depends on
+    OrderService --> InventoryService : depends on
+    OrderService --> OrderRepository : depends on
+    
+    PaymentGatewayInterface <|-- StripeGateway : implements
+    PaymentGatewayInterface <|-- PayPalGateway : implements
