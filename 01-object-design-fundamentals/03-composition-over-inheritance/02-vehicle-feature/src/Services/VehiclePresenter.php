@@ -10,11 +10,17 @@ final class VehiclePresenter
 	public function show(Vehicle $vehicle)
 	{
 		echo <<<TEXT
+
 VEHICLE DETAILS
 -----------------
-Name  : {$vehicle->name}
-Engine: {$vehicle->engine()}
-Fuel  : {$vehicle->fuel()}
+Name         : {$vehicle->name}
+Engine       : {$vehicle->engine()}
+Fuel         : {$vehicle->fuel()}
+Entertainment: {$vehicle->entertainment()}
+Navigation   : {$vehicle->navigation()}
+Safety       : {$vehicle->safety()}
+Transmission : {$vehicle->transmission()}
+
 
 TEXT;
 	}

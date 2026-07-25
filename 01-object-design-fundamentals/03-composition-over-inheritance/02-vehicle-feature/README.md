@@ -6,35 +6,35 @@ src/
 │   ├── SafetyFeature.php ✅
 │   └── TransmissionFeature.php ✅
 │
-├── Models/
+├── Models/✅
 │   ├── Specification.php ✅
 │   └── Vehicle.php ✅
 │
-├── Services/
-│   ├── Engines/
+├── Services/✅
+│   ├── Engines/ ✅
 │   │   ├── PetrolEngine.php ✅
-│   │   ├── DieselEngine.php
-│   │   └── ElectricMotor.php
+│   │   ├── DieselEngine.php ✅
+│   │   └── ElectricMotor.php ✅
 │   │
-│   ├── Fuel/
+│   ├── Fuel/✅
 │   │   ├── PetrolFuel.php ✅
-│   │   ├── DieselFuel.php
-│   │   └── BatteryFuel.php
+│   │   ├── DieselFuel.php ✅
+│   │   └── BatteryFuel.php ✅
 │   │
-│   ├── Navigation/
-│   │   ├── GpsNavigation.php
-│   │   ├── PremiumNavigation.php
-│   │   └── NoNavigation.php
+│   ├── Navigation/✅
+│   │   ├── GpsNavigation.php✅
+│   │   ├── PremiumNavigation.php✅
+│   │   └── NoNavigation.php✅
 │   │
-│   ├── Safety/
-│   │   ├── BasicSafety.php
-│   │   ├── AdvancedSafety.php
-│   │   └── AutonomousSafety.php
+│   ├── Safety/ ✅
+│   │   ├── BasicSafety.php✅
+│   │   ├── AdvancedSafety.php ✅
+│   │   └── AutonomousSafety.php ✅
 │   │
-│   ├── Transmission/
-│   │   ├── ManualTransmission.php
-│   │   ├── AutomaticTransmission.php
-│   │   └── SingleSpeedTransmission.php
+│   ├── Transmission/ ✅
+│   │   ├── ManualTransmission.php ✅
+│   │   ├── AutomaticTransmission.php ✅
+│   │   └── SingleSpeedTransmission.php ✅
 │   │
 │   └── VehiclePresenter.php ✅
 │

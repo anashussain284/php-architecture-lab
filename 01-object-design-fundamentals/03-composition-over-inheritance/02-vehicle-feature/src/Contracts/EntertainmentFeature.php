@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-interface SafetyFeature
+interface EntertainmentFeature
 {
 	public function description(): string;
 }
