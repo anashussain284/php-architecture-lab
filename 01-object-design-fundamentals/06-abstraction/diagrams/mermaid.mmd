@@ -1,0 +1,50 @@
+classDiagram
+    class PaymentInterface {
+        <<interface>>
+        +charge(amount, customer): array
+        +refund(transactionId, amount): array
+        +getTransactionLog(): array
+    }
+    
+    class AbstractPayment {
+        #string $currency
+        #array $transactionLog
+        +__construct(string $currency)
+        #logTransaction(type, id, amount, error)
+        +getTransactionLog(): array
+        +calculateFee(amount)*: float
+        +formatCurrency(amount)*: string
+        +charge(amount, customer)*: array
+        +refund(transactionId, amount)*: array
+    }
+    
+    class StripePayment {
+        -string $secretKey
+        +__construct(string $secretKey, string $currency)
+        +charge(amount, customer): array
+        +refund(transactionId, amount): array
+        +calculateFee(amount): float
+        +formatCurrency(amount): string
+    }
+    
+    class PayPalPayment {
+        -string $clientId
+        -string $clientSecret
+        +__construct(string $clientId, string $clientSecret, string $currency)
+        +charge(amount, customer): array
+        +refund(transactionId, amount): array
+        +calculateFee(amount): float
+        +formatCurrency(amount): string
+    }
+    
+    class PaymentController {
+        -PaymentInterface $payment
+        +__construct(PaymentInterface $payment)
+        +charge(Request $request)
+        +refund(Request $request)
+    }
+    
+    PaymentInterface <|-- AbstractPayment : implements
+    AbstractPayment <|-- StripePayment : extends
+    AbstractPayment <|-- PayPalPayment : extends
+    PaymentController --> PaymentInterface : depends on
