@@ -14,6 +14,7 @@ use App\Services\Inventory\InfiniteInventory;
 use App\Services\Inventory\OutOfStockInventory;
 use App\Services\Reviews\SimpleReviews;
 use App\Services\Shipping\PaidShipping;
+use App\Services\Wishlist\WishlistEnabled;
 
 $money = new Money(
 	amountInCent: 10000,
@@ -26,6 +27,7 @@ $infiniteInventory = new InfiniteInventory();
 $outOfStockInventory = new OutOfStockInventory();
 $simpleReviews = new SimpleReviews(rating: 4.5);
 $paidShipping = new PaidShipping(amount: 500);
+$wishlistEnabled = new WishlistEnabled();
 
 $mobile = new Product(
 	name: 'Mobile',
@@ -33,6 +35,7 @@ $mobile = new Product(
 	inventory: $outOfStockInventory,
 	review: $simpleReviews,
 	shipping: $paidShipping,
+	wishlist: $wishlistEnabled
 );
 $productPresenter = new ProductPresenter();
 $productPresenter->show(product: $mobile);

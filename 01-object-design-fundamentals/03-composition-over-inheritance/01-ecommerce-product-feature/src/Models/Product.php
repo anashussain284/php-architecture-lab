@@ -7,6 +7,7 @@ use App\Contracts\PricingFeature;
 use App\Contracts\InventoryFeature;
 use App\Contracts\ReviewFeature;
 use App\Contracts\ShippingFeature;
+use App\Contracts\WishlistFeature;
 use App\Models\Money;
 
 final class Product
@@ -16,7 +17,8 @@ final class Product
 		private readonly PricingFeature $pricing,
 		private readonly InventoryFeature $inventory,
 		private readonly ReviewFeature $review,
-		private readonly ShippingFeature $shipping
+		private readonly ShippingFeature $shipping,
+		private readonly WishlistFeature $wishlist
 	) {}
 
 	public function price(): Money
@@ -37,5 +39,10 @@ final class Product
 	public function shippingCost(): Money
 	{
 		return $this->shipping->shippingCost();
+	}
+
+	public function wishlist(): bool
+	{
+		return $this->wishlist->isWishlist();
 	}
 }

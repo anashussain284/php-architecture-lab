@@ -9,7 +9,7 @@ src/
 │   ├── Money.php ✅
 │   └── Product.php ✅
 │
-├── Services/
+├── Services/ ✅
 │   ├── Inventory/ ✅
 │   │   ├── FiniteInventory.php ✅
 │   │   ├── InfiniteInventory.php ✅
@@ -20,15 +20,15 @@ src/
 │   │   ├── DiscountPrice.php ✅
 │   │   └── PremiumPrice.php ✅
 │   │
-│   ├── Reviews/
-│   │   ├── EmptyReviews.php
+│   ├── Reviews/✅
+│   │   ├── EmptyReviews.php ✅
 │   │   ├── SimpleReviews.php ✅
-│   │   └── FeaturedReviews.php
+│   │   └── FeaturedReviews.php ✅
 │   │
-│   ├── Shipping/
-│   │   ├── FreeShipping.php
+│   ├── Shipping/ ✅
+│   │   ├── FreeShipping.php ✅
 │   │   ├── PaidShipping.php ✅
-│   │   └── DigitalShipping.php
+│   │   └── DigitalShipping.php ✅
 │   │
 │   └── ProductPresenter.php
 │

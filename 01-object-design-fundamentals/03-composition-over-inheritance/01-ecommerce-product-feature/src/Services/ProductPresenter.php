@@ -18,6 +18,7 @@ Price   : {$product->price()->format()}
 Shipping: {$product->shippingCost()->format()}
 Stock   : {$product->quantity()}
 Review  : {$product->review()}
+Is Wishlist: {$product->wishlist()}
 
 TEXT;
 	}
