@@ -5,7 +5,7 @@ namespace App\Services\Wishlist;
 
 use App\Contracts\WishlistFeature;
 
-class WishlistEnabled implements WishlistFeature
+final class WishlistEnabled implements WishlistFeature
 {
 	public function isWishlist(): bool
 	{

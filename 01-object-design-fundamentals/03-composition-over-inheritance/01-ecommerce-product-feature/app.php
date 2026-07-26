@@ -15,13 +15,27 @@ use App\Services\Inventory\OutOfStockInventory;
 use App\Services\Reviews\SimpleReviews;
 use App\Services\Shipping\PaidShipping;
 use App\Services\Wishlist\WishlistEnabled;
+use App\Services\Pricing\Features\CurrencyConverter;
+use App\Services\Pricing\Features\PriceFormatter;
+use App\Services\Pricing\Features\TaxCalculator;
 
 $money = new Money(
 	amountInCent: 10000,
 	currency: 'USD'
 );
-$fixedPrice = new FixedPrice($money);
-$discountPrice = new DiscountPrice(amount: 20000, discount: 75);
+$fixedPrice = new FixedPrice(
+	price: $money,
+	currencyConverter: new CurrencyConverter(),
+	priceFormatter: new PriceFormatter(),
+	taxCalculator: new TaxCalculator()
+);
+$discountPrice = new DiscountPrice(
+	amount: 20000,
+	discount: 75,
+	currencyConverter: new CurrencyConverter(),
+	priceFormatter: new PriceFormatter(),
+	taxCalculator: new TaxCalculator()
+);
 $finiteInventory = new FiniteInventory(quantity: 1);
 $infiniteInventory = new InfiniteInventory();
 $outOfStockInventory = new OutOfStockInventory();
@@ -31,7 +45,7 @@ $wishlistEnabled = new WishlistEnabled();
 
 $mobile = new Product(
 	name: 'Mobile',
-	pricing: $discountPrice,
+	pricing: $fixedPrice,
 	inventory: $outOfStockInventory,
 	review: $simpleReviews,
 	shipping: $paidShipping,
