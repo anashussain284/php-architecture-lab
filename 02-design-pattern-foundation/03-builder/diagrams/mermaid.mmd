@@ -1,0 +1,57 @@
+classDiagram
+    class ReportEmail {
+        -string $to
+        -string $subject
+        -string $body
+        -array $attachments
+        -array $cc
+        -array $bcc
+        -array $headers
+        -string $template
+        -string $priority
+        -string $replyTo
+        -string $fromAddress
+        -string $fromName
+        -?DateTime $scheduledAt
+        +__construct(Builder $builder)
+        +send(): void
+    }
+    
+    class ReportEmailBuilder {
+        -string $to
+        -string $subject
+        -string $body
+        -array $attachments
+        -array $cc
+        -array $bcc
+        -array $headers
+        -string $template
+        -string $priority
+        -string $replyTo
+        -string $fromAddress
+        -string $fromName
+        -?DateTime $scheduledAt
+        +to(string $to): self
+        +subject(string $subject): self
+        +body(string $body): self
+        +attachment(string $path, string $name): self
+        +cc(string|array $cc): self
+        +bcc(string|array $bcc): self
+        +header(string $key, string $value): self
+        +template(string $template): self
+        +priority(string $priority): self
+        +replyTo(string $replyTo): self
+        +from(string $address, string $name = ''): self
+        +scheduledAt(DateTime $dateTime): self
+        +build(): ReportEmail
+        -validate(): void
+    }
+    
+    class ReportService {
+        -ReportEmailBuilder $builder
+        +__construct(ReportEmailBuilder $builder)
+        +sendReport(Report $report, User $user): void
+    }
+    
+    ReportEmailBuilder --> ReportEmail : builds
+    ReportService --> ReportEmailBuilder : uses
