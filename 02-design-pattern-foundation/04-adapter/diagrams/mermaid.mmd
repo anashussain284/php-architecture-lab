@@ -1,0 +1,35 @@
+classDiagram
+    class PaymentInterface {
+        <<interface>>
+        +charge(amount, currency, paymentMethodId): array
+        +refund(paymentIntentId, amount): array
+    }
+    
+    class StripeAdapter {
+        -StripeClient $stripe
+        +__construct(string $secretKey)
+        +charge(amount, currency, paymentMethodId): array
+        +refund(paymentIntentId, amount): array
+        -handleStripeException(Exception $e): array
+    }
+    
+    class PayPalAdapter {
+        -PayPalClient $client
+        +__construct(string $clientId, string $secret)
+        +charge(amount, currency, paymentMethodId): array
+        +refund(paymentIntentId, amount): array
+        -handlePayPalException(Exception $e): array
+    }
+    
+    class PaymentService {
+        -PaymentInterface $payment
+        +__construct(PaymentInterface $payment)
+        +processPayment(Order): array
+        +refundPayment(string, float): array
+    }
+    
+    PaymentInterface <|-- StripeAdapter : implements
+    PaymentInterface <|-- PayPalAdapter : implements
+    PaymentService --> PaymentInterface : depends on
+    StripeAdapter --> StripeClient : adapts
+    PayPalAdapter --> PayPalClient : adapts
