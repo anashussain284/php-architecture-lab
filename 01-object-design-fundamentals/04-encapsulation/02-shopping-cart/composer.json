@@ -1,0 +1,38 @@
+{
+    "name": "root/02-shopping-cart",
+    "autoload": {
+        "psr-4": {
+            "Root\\02ShoppingCart\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "anas"
+        }
+    ],
+    "require": {}
+}
+
+
+---
+
+{
+    "name": "04-encapsulation/01-bank-account",
+    "description": "Encapsulation demonstrating file prcessing pipeline",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Anas Hussain M",
+            "email": "anashussain284@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2"
+    }
+}

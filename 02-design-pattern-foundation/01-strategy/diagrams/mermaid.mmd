@@ -1,0 +1,49 @@
+classDiagram
+    class ShippingCalculator {
+        -ShippingStrategy $strategy
+        +__construct(ShippingStrategy $strategy)
+        +calculate(Order $order): float
+        +setStrategy(ShippingStrategy $strategy): void
+    }
+    
+    class ShippingStrategy {
+        <<interface>>
+        +calculate(Order $order): float
+    }
+    
+    class USAStrategy {
+        +calculate(Order $order): float
+    }
+    
+    class CanadaStrategy {
+        +calculate(Order $order): float
+    }
+    
+    class UKStrategy {
+        +calculate(Order $order): float
+    }
+    
+    class InternationalStrategy {
+        +calculate(Order $order): float
+    }
+    
+    class DiscountDecorator {
+        -ShippingStrategy $wrapped
+        -float $discount
+        +__construct(ShippingStrategy $wrapped, float $discount)
+        +calculate(Order $order): float
+    }
+    
+    class WeightBasedStrategy {
+        -array $tiers
+        +__construct(array $tiers)
+        +calculate(Order $order): float
+    }
+    
+    ShippingCalculator --> ShippingStrategy : delegates
+    ShippingStrategy <|-- USAStrategy : implements
+    ShippingStrategy <|-- CanadaStrategy : implements
+    ShippingStrategy <|-- UKStrategy : implements
+    ShippingStrategy <|-- InternationalStrategy : implements
+    ShippingStrategy <|-- DiscountDecorator : implements
+    ShippingStrategy <|-- WeightBasedStrategy : implements
