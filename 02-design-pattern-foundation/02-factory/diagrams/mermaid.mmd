@@ -1,0 +1,44 @@
+classDiagram
+    class PaymentProcessor {
+        <<interface>>
+        +charge(Order): array
+        +refund(Order, amount): array
+        +cancel(Order): bool
+    }
+    
+    class StripeProcessor {
+        +charge(Order): array
+        +refund(Order, amount): array
+        +cancel(Order): bool
+    }
+    
+    class PayPalProcessor {
+        +charge(Order): array
+        +refund(Order, amount): array
+        +cancel(Order): bool
+    }
+    
+    class BankTransferProcessor {
+        +charge(Order): array
+        +refund(Order, amount): array
+        +cancel(Order): bool
+    }
+    
+    class PaymentProcessorFactory {
+        +create(string type): PaymentProcessor
+        +createStripe(): PaymentProcessor
+        +createPayPal(): PaymentProcessor
+    }
+    
+    class PaymentController {
+        -PaymentProcessorFactory $factory
+        +__construct(PaymentProcessorFactory $factory)
+        +process(Request, Order)
+    }
+    
+    PaymentProcessor <|-- StripeProcessor : implements
+    PaymentProcessor <|-- PayPalProcessor : implements
+    PaymentProcessor <|-- BankTransferProcessor : implements
+    
+    PaymentProcessorFactory --> PaymentProcessor : creates
+    PaymentController --> PaymentProcessorFactory : uses
