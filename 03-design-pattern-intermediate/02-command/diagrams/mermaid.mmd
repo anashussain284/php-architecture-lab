@@ -1,0 +1,40 @@
+classDiagram
+    class Command {
+        <<interface>>
+        +execute(): void
+        +undo(): void
+    }
+    
+    class ProcessPaymentCommand {
+        -PaymentService $payment
+        -Order $order
+        +__construct(Order $order, PaymentService $payment)
+        +execute(): void
+        +undo(): void
+    }
+    
+    class SendEmailCommand {
+        -EmailService $email
+        -User $user
+        -string $subject
+        -string $body
+        +__construct(User $user, string $subject, string $body, EmailService $email)
+        +execute(): void
+    }
+    
+    class CommandQueue {
+        -array $commands
+        +add(Command $command): void
+        +process(): void
+        +processAll(): void
+    }
+    
+    class OrderService {
+        -CommandQueue $queue
+        +placeOrder(Order $order): void
+    }
+    
+    Command <|-- ProcessPaymentCommand : implements
+    Command <|-- SendEmailCommand : implements
+    CommandQueue --> Command : contains
+    OrderService --> CommandQueue : uses
