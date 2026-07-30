@@ -1,0 +1,49 @@
+classDiagram
+    class EventDispatcher {
+        -listeners: array
+        +listen(event, listener)
+        +dispatch(event)
+        +hasListeners(event): bool
+    }
+    
+    class Event {
+        <<interface>>
+    }
+    
+    class OrderCreated {
+        +Order $order
+    }
+    
+    class Listener {
+        <<interface>>
+        +handle(event)
+    }
+    
+    class SendOrderConfirmation {
+        +handle(OrderCreated $event)
+    }
+    
+    class UpdateInventory {
+        +handle(OrderCreated $event)
+    }
+    
+    class NotifyWarehouse {
+        +handle(OrderCreated $event)
+    }
+    
+    class LogOrder {
+        +handle(OrderCreated $event)
+    }
+    
+    class TrackAnalytics {
+        +handle(OrderCreated $event)
+    }
+    
+    EventDispatcher --> Listener : notifies
+    EventDispatcher --> Event : dispatches
+    Event <|-- OrderCreated : implements
+    Listener <|-- SendOrderConfirmation : implements
+    Listener <|-- UpdateInventory : implements
+    Listener <|-- NotifyWarehouse : implements
+    Listener <|-- LogOrder : implements
+    Listener <|-- TrackAnalytics : implements
