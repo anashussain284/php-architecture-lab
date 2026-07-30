@@ -1,0 +1,44 @@
+classDiagram
+    class Cache {
+        <<static>>
+        +get(key, default)
+        +put(key, value, seconds)
+        +remember(key, seconds, callback)
+    }
+    
+    class CacheManager {
+        -Store $store
+        +get(key, default)
+        +put(key, value, seconds)
+        +remember(key, seconds, callback)
+    }
+    
+    class Store {
+        <<interface>>
+        +get(key)
+        +put(key, value, seconds)
+        +remember(key, seconds, callback)
+    }
+    
+    class RedisStore {
+        +get(key)
+        +put(key, value, seconds)
+        +remember(key, seconds, callback)
+    }
+    
+    class MemcachedStore {
+        +get(key)
+        +put(key, value, seconds)
+        +remember(key, seconds, callback)
+    }
+    
+    class Container {
+        +make(abstract)
+        +bound(abstract)
+    }
+    
+    Cache --> CacheManager : delegates
+    Cache --> Container : resolves
+    CacheManager --> Store : depends on
+    Store <|-- RedisStore : implements
+    Store <|-- MemcachedStore : implements
