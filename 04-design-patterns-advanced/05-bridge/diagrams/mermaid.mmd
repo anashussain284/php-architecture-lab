@@ -1,0 +1,49 @@
+classDiagram
+    class Report {
+        -ReportFormatter $formatter
+        +__construct(ReportFormatter $formatter)
+        +generate(): string
+        +fetchData(): array*
+    }
+    
+    class SalesReport {
+        +fetchData(): array
+    }
+    
+    class InventoryReport {
+        +fetchData(): array
+    }
+    
+    class CustomerReport {
+        +fetchData(): array
+    }
+    
+    class ReportFormatter {
+        <<interface>>
+        +format(data): string
+    }
+    
+    class PdfFormatter {
+        +format(data): string
+    }
+    
+    class ExcelFormatter {
+        +format(data): string
+    }
+    
+    class CsvFormatter {
+        +format(data): string
+    }
+    
+    class JsonFormatter {
+        +format(data): string
+    }
+    
+    Report <|-- SalesReport : extends
+    Report <|-- InventoryReport : extends
+    Report <|-- CustomerReport : extends
+    Report --> ReportFormatter : delegates
+    ReportFormatter <|-- PdfFormatter : implements
+    ReportFormatter <|-- ExcelFormatter : implements
+    ReportFormatter <|-- CsvFormatter : implements
+    ReportFormatter <|-- JsonFormatter : implements
