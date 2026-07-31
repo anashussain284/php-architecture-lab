@@ -1,0 +1,76 @@
+classDiagram
+    class OrderContext {
+        -OrderState $state
+        +__construct(OrderState $state)
+        +pay(paymentId): void
+        +ship(trackingNumber): void
+        +deliver(): void
+        +cancel(): void
+        +refund(): void
+        +setState(state): void
+    }
+    
+    class OrderState {
+        <<interface>>
+        +pay(context, paymentId): void
+        +ship(context, trackingNumber): void
+        +deliver(context): void
+        +cancel(context): void
+        +refund(context): void
+    }
+    
+    class PendingState {
+        +pay(context, paymentId): void
+        +ship(context, trackingNumber): void
+        +deliver(context): void
+        +cancel(context): void
+        +refund(context): void
+    }
+    
+    class PaidState {
+        +pay(context, paymentId): void
+        +ship(context, trackingNumber): void
+        +deliver(context): void
+        +cancel(context): void
+        +refund(context): void
+    }
+    
+    class ShippedState {
+        +pay(context, paymentId): void
+        +ship(context, trackingNumber): void
+        +deliver(context): void
+        +cancel(context): void
+        +refund(context): void
+    }
+    
+    class DeliveredState {
+        +pay(context, paymentId): void
+        +ship(context, trackingNumber): void
+        +deliver(context): void
+        +cancel(context): void
+        +refund(context): void
+    }
+    
+    class CancelledState {
+        +pay(context, paymentId): void
+        +ship(context, trackingNumber): void
+        +deliver(context): void
+        +cancel(context): void
+        +refund(context): void
+    }
+    
+    class RefundedState {
+        +pay(context, paymentId): void
+        +ship(context, trackingNumber): void
+        +deliver(context): void
+        +cancel(context): void
+        +refund(context): void
+    }
+    
+    OrderContext --> OrderState : delegates
+    OrderState <|-- PendingState : implements
+    OrderState <|-- PaidState : implements
+    OrderState <|-- ShippedState : implements
+    OrderState <|-- DeliveredState : implements
+    OrderState <|-- CancelledState : implements
+    OrderState <|-- RefundedState : implements
