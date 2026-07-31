@@ -1,0 +1,42 @@
+classDiagram
+    class ReportPrototype {
+        <<interface>>
+        +clone(): ReportPrototype
+    }
+    
+    class Report {
+        -string $title
+        -string $description
+        -array $filters
+        -ChartSettings $chartSettings
+        -ReportFilter $filter
+        +clone(): Report
+        -__clone(): void
+    }
+    
+    class ChartSettings {
+        -string $type
+        -array $colors
+        -string $title
+        +clone(): ChartSettings
+        -__clone(): void
+    }
+    
+    class ReportFilter {
+        -string $field
+        -string $operator
+        -mixed $value
+        +clone(): ReportFilter
+        -__clone(): void
+    }
+    
+    class ReportManager {
+        -array $prototypes
+        +addPrototype(key, prototype)
+        +createFromPrototype(key): Report
+    }
+    
+    ReportPrototype <|-- Report : implements
+    Report --> ChartSettings : contains
+    Report --> ReportFilter : contains
+    ReportManager --> ReportPrototype : uses
