@@ -1,0 +1,41 @@
+classDiagram
+    class CategoryComponent {
+        <<interface>>
+        +getName(): string
+        +getProductCount(): int
+        +getTotalProductCount(): int
+        +renderMenu(): string
+        +toArray(): array
+        +find(id): ?CategoryComponent
+    }
+    
+    class CategoryLeaf {
+        -string $name
+        -int $productCount
+        +__construct(name, productCount)
+        +getName(): string
+        +getProductCount(): int
+        +getTotalProductCount(): int
+        +renderMenu(): string
+        +toArray(): array
+        +find(id): ?CategoryComponent
+    }
+    
+    class CategoryComposite {
+        -string $name
+        -array $children
+        +__construct(name)
+        +add(CategoryComponent $component): void
+        +remove(CategoryComponent $component): void
+        +getChildren(): array
+        +getName(): string
+        +getProductCount(): int
+        +getTotalProductCount(): int
+        +renderMenu(): string
+        +toArray(): array
+        +find(id): ?CategoryComponent
+    }
+    
+    CategoryComponent <|-- CategoryLeaf : implements
+    CategoryComponent <|-- CategoryComposite : implements
+    CategoryComposite --> CategoryComponent : contains
