@@ -1,0 +1,51 @@
+classDiagram
+    class Handler {
+        <<interface>>
+        +handle(request): response
+        +setNext(handler): handler
+    }
+    
+    class AbstractHandler {
+        -Handler $next
+        +setNext(handler): handler
+        +handle(request): response
+    }
+    
+    class AuthenticationHandler {
+        -AuthService $auth
+        +handle(request): response
+    }
+    
+    class RateLimitHandler {
+        -RateLimiter $limiter
+        +handle(request): response
+    }
+    
+    class ValidationHandler {
+        -Validator $validator
+        +handle(request): response
+    }
+    
+    class InventoryHandler {
+        -InventoryService $inventory
+        +handle(request): response
+    }
+    
+    class OrderCreationHandler {
+        -OrderService $orderService
+        +handle(request): response
+    }
+    
+    class NotificationHandler {
+        -NotificationService $notifier
+        +handle(request): response
+    }
+    
+    Handler <|-- AbstractHandler : implements
+    AbstractHandler <|-- AuthenticationHandler : extends
+    AbstractHandler <|-- RateLimitHandler : extends
+    AbstractHandler <|-- ValidationHandler : extends
+    AbstractHandler <|-- InventoryHandler : extends
+    AbstractHandler <|-- OrderCreationHandler : extends
+    AbstractHandler <|-- NotificationHandler : extends
+    AbstractHandler --> Handler : next
