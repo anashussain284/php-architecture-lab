@@ -1,0 +1,31 @@
+classDiagram
+    class Subject {
+        <<interface>>
+        +getData(): mixed
+    }
+    
+    class RealSubject {
+        -array $data
+        +__construct()
+        +getData(): mixed
+    }
+    
+    class Proxy {
+        -RealSubject $realSubject
+        -bool $loaded
+        -array $cache
+        +__construct()
+        +getData(): mixed
+        -loadData(): void
+    }
+    
+    class Client {
+        -Subject $subject
+        +__construct(Subject $subject)
+        +doSomething(): void
+    }
+    
+    Subject <|-- RealSubject : implements
+    Subject <|-- Proxy : implements
+    Proxy --> RealSubject : delegates
+    Client --> Subject : uses
