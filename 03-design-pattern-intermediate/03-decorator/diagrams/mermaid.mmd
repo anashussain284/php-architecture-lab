@@ -1,0 +1,54 @@
+classDiagram
+    class ReportInterface {
+        <<interface>>
+        +generate(Report): string
+    }
+    
+    class ReportService {
+        +generate(Report): string
+    }
+    
+    class ReportDecorator {
+        -ReportInterface $component
+        +__construct(ReportInterface $component)
+        +generate(Report): string
+    }
+    
+    class CacheDecorator {
+        -CacheService $cache
+        +__construct(ReportInterface $component, CacheService $cache)
+        +generate(Report): string
+    }
+    
+    class LoggingDecorator {
+        -Logger $logger
+        +__construct(ReportInterface $component, Logger $logger)
+        +generate(Report): string
+    }
+    
+    class CompressionDecorator {
+        -Compressor $compressor
+        +__construct(ReportInterface $component, Compressor $compressor)
+        +generate(Report): string
+    }
+    
+    class EncryptionDecorator {
+        -Encryptor $encryptor
+        +__construct(ReportInterface $component, Encryptor $encryptor)
+        +generate(Report): string
+    }
+    
+    class EmailDecorator {
+        -EmailService $email
+        +__construct(ReportInterface $component, EmailService $email)
+        +generate(Report): string
+    }
+    
+    ReportInterface <|-- ReportService : implements
+    ReportInterface <|-- ReportDecorator : implements
+    ReportDecorator <|-- CacheDecorator : extends
+    ReportDecorator <|-- LoggingDecorator : extends
+    ReportDecorator <|-- CompressionDecorator : extends
+    ReportDecorator <|-- EncryptionDecorator : extends
+    ReportDecorator <|-- EmailDecorator : extends
+    ReportDecorator --> ReportInterface : wraps
