@@ -1,0 +1,39 @@
+classDiagram
+    class AbstractReport {
+        -Logger $logger
+        -Exporter $exporter
+        +generate(format): void
+        #fetchData(): array*
+        #processData(data): array*
+        #formatReport(data): string*
+        #validateData(data): bool
+        #getRecipients(): array
+        -export(content, format): string
+        -send(content, recipients): void
+        -log(message): void
+    }
+    
+    class SalesReport {
+        #fetchData(): array
+        #processData(data): array
+        #formatReport(data): string
+        #getRecipients(): array
+    }
+    
+    class InventoryReport {
+        #fetchData(): array
+        #processData(data): array
+        #formatReport(data): string
+        #getRecipients(): array
+        #validateData(data): bool
+    }
+    
+    class CustomerReport {
+        #fetchData(): array
+        #processData(data): array
+        #formatReport(data): string
+    }
+    
+    AbstractReport <|-- SalesReport : extends
+    AbstractReport <|-- InventoryReport : extends
+    AbstractReport <|-- CustomerReport : extends
