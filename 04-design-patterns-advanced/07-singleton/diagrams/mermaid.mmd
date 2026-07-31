@@ -1,0 +1,46 @@
+classDiagram
+    class SingletonLogger {
+        -static $instance
+        -$logs
+        -$logFile
+        +getInstance() Logger
+        +log(message)
+        +getLogs()
+    }
+    
+    class ServiceContainer {
+        -$bindings
+        -$instances
+        +singleton(abstract, concrete)
+        +make(abstract)
+    }
+    
+    class LoggerInterface {
+        <<interface>>
+        +log(message)
+        +getLogs()
+    }
+    
+    class LoggerService {
+        -$logs
+        +log(message)
+        +getLogs()
+    }
+    
+    class UserService {
+        -LoggerInterface $logger
+        +__construct(LoggerInterface $logger)
+        +createUser(data)
+    }
+    
+    class OrderService {
+        -LoggerInterface $logger
+        +__construct(LoggerInterface $logger)
+        +createOrder(data)
+    }
+    
+    SingletonLogger --> UserService : hidden dependency
+    LoggerInterface <|-- LoggerService : implements
+    ServiceContainer --> LoggerService : manages
+    UserService --> LoggerInterface : explicit dependency
+    OrderService --> LoggerInterface : explicit dependency
