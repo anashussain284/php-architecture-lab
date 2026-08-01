@@ -1,0 +1,52 @@
+classDiagram
+    class OrderRepositoryInterface {
+        <<interface>>
+        +find(id): Order
+        +findAll(): Collection
+        +findByStatus(status): Collection
+        +create(data): Order
+        +update(id, data): Order
+        +delete(id): bool
+        +search(criteria): Collection
+    }
+    
+    class EloquentOrderRepository {
+        +find(id): Order
+        +findAll(): Collection
+        +findByStatus(status): Collection
+        +create(data): Order
+        +update(id, data): Order
+        +delete(id): bool
+        +search(criteria): Collection
+    }
+    
+    class CachedOrderRepository {
+        -OrderRepositoryInterface $repository
+        -CacheManager $cache
+        +find(id): Order
+        +findAll(): Collection
+        +findByStatus(status): Collection
+        +create(data): Order
+        +update(id, data): Order
+        +delete(id): bool
+        +search(criteria): Collection
+    }
+    
+    class OrderController {
+        -OrderRepositoryInterface $repository
+        +index()
+        +show()
+        +store()
+        +search()
+    }
+    
+    class OrderService {
+        -OrderRepositoryInterface $repository
+        +processOrder(data)
+        +cancelOrder(id)
+    }
+    
+    OrderRepositoryInterface <|-- EloquentOrderRepository : implements
+    OrderRepositoryInterface <|-- CachedOrderRepository : implements
+    OrderController --> OrderRepositoryInterface : depends on
+    OrderService --> OrderRepositoryInterface : depends on
