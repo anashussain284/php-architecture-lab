@@ -1,0 +1,47 @@
+classDiagram
+    class OrderController {
+        -OrderService $orderService
+        +__construct(OrderService $orderService)
+        +store(Request): Response
+        +cancel(Request, Order): Response
+        +update(Request, Order): Response
+    }
+    
+    class OrderService {
+        -OrderRepositoryInterface $repository
+        -PaymentService $payment
+        -NotificationService $notifier
+        -AnalyticsService $analytics
+        +createOrder(data): Order
+        +cancelOrder(order): void
+        +updateOrder(order, data): Order
+        -validateInventory(items): void
+        -processPayment(order, paymentMethodId): array
+        -sendConfirmation(order): void
+        -updateMetrics(user, order): void
+    }
+    
+    class OrderRepositoryInterface {
+        <<interface>>
+        +save(order): Order
+        +find(id): ?Order
+        +delete(order): void
+    }
+    
+    class EloquentOrderRepository {
+        +save(order): Order
+        +find(id): ?Order
+        +delete(order): void
+    }
+    
+    class OrderCreated {
+        +Order $order
+    }
+    
+    OrderController --> OrderService : uses
+    OrderService --> OrderRepositoryInterface : depends on
+    OrderService --> PaymentService : uses
+    OrderService --> NotificationService : uses
+    OrderService --> AnalyticsService : uses
+    OrderService --> OrderCreated : dispatches
+    OrderRepositoryInterface <|-- EloquentOrderRepository : implements
