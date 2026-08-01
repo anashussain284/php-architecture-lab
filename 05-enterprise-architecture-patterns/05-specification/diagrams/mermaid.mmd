@@ -1,0 +1,61 @@
+classDiagram
+    class Specification {
+        <<interface>>
+        +isSatisfiedBy(candidate): bool
+        +toSql(query): Builder
+    }
+    
+    class AndSpecification {
+        -Specification $left
+        -Specification $right
+        +__construct(left, right)
+        +isSatisfiedBy(candidate): bool
+        +toSql(query): Builder
+    }
+    
+    class OrSpecification {
+        -Specification $left
+        -Specification $right
+        +__construct(left, right)
+        +isSatisfiedBy(candidate): bool
+        +toSql(query): Builder
+    }
+    
+    class NotSpecification {
+        -Specification $spec
+        +__construct(spec)
+        +isSatisfiedBy(candidate): bool
+        +toSql(query): Builder
+    }
+    
+    class CategorySpecification {
+        -int $categoryId
+        +__construct(categoryId)
+        +isSatisfiedBy(candidate): bool
+        +toSql(query): Builder
+    }
+    
+    class PriceRangeSpecification {
+        -float $min
+        -float $max
+        +__construct(min, max)
+        +isSatisfiedBy(candidate): bool
+        +toSql(query): Builder
+    }
+    
+    class InStockSpecification {
+        +isSatisfiedBy(candidate): bool
+        +toSql(query): Builder
+    }
+    
+    class ProductRepository {
+        +findBySpecification(Specification): Collection
+    }
+    
+    Specification <|-- AndSpecification : implements
+    Specification <|-- OrSpecification : implements
+    Specification <|-- NotSpecification : implements
+    Specification <|-- CategorySpecification : implements
+    Specification <|-- PriceRangeSpecification : implements
+    Specification <|-- InStockSpecification : implements
+    ProductRepository --> Specification : uses
