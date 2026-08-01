@@ -1,0 +1,50 @@
+classDiagram
+    class Model {
+        -array $attributes
+        -array $original
+        -array $relations
+        -Connection $connection
+        +find(id)
+        +save()
+        +delete()
+        +update(attributes)
+        +where(column, value)
+        +get()
+        +first()
+        +create(attributes)
+    }
+    
+    class User {
+        +string $name
+        +string $email
+        +posts()
+        +profile()
+        +scopeActive()
+    }
+    
+    class Post {
+        +string $title
+        +string $content
+        +user()
+        +comments()
+        +scopePublished()
+    }
+    
+    class QueryBuilder {
+        -array $selects
+        -array $wheres
+        -array $joins
+        -array $orders
+        -int $limit
+        +select(columns)
+        +where(column, value)
+        +join(table, condition)
+        +orderBy(column, direction)
+        +limit(value)
+        +get()
+        +first()
+    }
+    
+    Model <|-- User : extends
+    Model <|-- Post : extends
+    Model --> QueryBuilder : uses
