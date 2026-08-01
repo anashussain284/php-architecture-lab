@@ -1,0 +1,44 @@
+classDiagram
+    class OrderDTO {
+        +int $userId
+        +array $items
+        +string $shippingAddress
+        +string $paymentMethod
+        +?float $total
+        +?string $notes
+        +__construct(data)
+        +toArray(): array
+        +validate(): void
+        +fromRequest(Request): self
+        +fromArray(array): self
+    }
+    
+    class OrderService {
+        +createOrder(OrderDTO $dto): Order
+        +updateOrder(int $id, OrderDTO $dto): Order
+    }
+    
+    class OrderItemDTO {
+        +int $productId
+        +int $quantity
+        +?float $price
+        +__construct(data)
+        +toArray(): array
+    }
+    
+    class OrderController {
+        -OrderService $service
+        +store(Request): Response
+    }
+    
+    class CreateOrderCommand {
+        -OrderService $service
+        +handle(): void
+    }
+    
+    OrderService --> OrderDTO : uses
+    OrderService --> OrderItemDTO : uses
+    OrderController --> OrderService : uses
+    OrderController --> OrderDTO : creates
+    CreateOrderCommand --> OrderService : uses
+    CreateOrderCommand --> OrderDTO : creates
