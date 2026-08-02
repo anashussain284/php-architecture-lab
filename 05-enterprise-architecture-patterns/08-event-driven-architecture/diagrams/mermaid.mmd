@@ -1,0 +1,67 @@
+classDiagram
+    class EventDispatcher {
+        -listeners: array
+        +dispatch(event): void
+        +listen(event, listener): void
+        +hasListeners(event): bool
+    }
+    
+    class UserRegistered {
+        -User $user
+        +__construct(user)
+    }
+    
+    class Event {
+        <<interface>>
+    }
+    
+    class Listener {
+        <<interface>>
+        +handle(event): void
+    }
+    
+    class SendWelcomeEmail {
+        -EmailService $email
+        +handle(event): void
+    }
+    
+    class CreateDefaultSettings {
+        -SettingsService $settings
+        +handle(event): void
+    }
+    
+    class AssignDefaultRole {
+        -RoleService $roles
+        +handle(event): void
+    }
+    
+    class NotifyAdmin {
+        -NotificationService $notifier
+        +handle(event): void
+    }
+    
+    class TrackAnalytics {
+        -AnalyticsService $analytics
+        +handle(event): void
+    }
+    
+    class SyncWithCrm {
+        -CrmService $crm
+        +handle(event): void
+    }
+    
+    class CreateTrialSubscription {
+        -SubscriptionService $subscription
+        +handle(event): void
+    }
+    
+    EventDispatcher --> Event : dispatches
+    EventDispatcher --> Listener : notifies
+    Event <|-- UserRegistered : implements
+    Listener <|-- SendWelcomeEmail : implements
+    Listener <|-- CreateDefaultSettings : implements
+    Listener <|-- AssignDefaultRole : implements
+    Listener <|-- NotifyAdmin : implements
+    Listener <|-- TrackAnalytics : implements
+    Listener <|-- SyncWithCrm : implements
+    Listener <|-- CreateTrialSubscription : implements
