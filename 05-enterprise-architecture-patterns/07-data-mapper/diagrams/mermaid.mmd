@@ -1,0 +1,64 @@
+classDiagram
+    class Order {
+        -int $id
+        -int $userId
+        -float $total
+        -string $status
+        -array $items
+        -DateTime $createdAt
+        +calculateTotal(): float
+        +processPayment(): void
+        +cancel(): void
+        +addItem(item): void
+        +getTotal(): float
+        +isPaid(): bool
+    }
+    
+    class OrderItem {
+        -int $id
+        -int $productId
+        -int $quantity
+        -float $price
+        +getSubtotal(): float
+    }
+    
+    class OrderMapper {
+        -Connection $db
+        +find(id): Order
+        +save(order): void
+        +delete(order): void
+        +findByUser(userId): array
+        +hydrate(data): Order
+        +extract(order): array
+    }
+    
+    class OrderRepository {
+        -OrderMapper $mapper
+        +find(id): Order
+        +save(order): void
+        +delete(order): void
+        +findByUser(userId): array
+    }
+    
+    class UnitOfWork {
+        -array $new
+        -array $dirty
+        -array $deleted
+        +registerNew(entity): void
+        +registerDirty(entity): void
+        +registerDeleted(entity): void
+        +commit(): void
+    }
+    
+    class OrderService {
+        -OrderRepository $repository
+        -UnitOfWork $unitOfWork
+        +placeOrder(data): Order
+        +cancelOrder(id): void
+    }
+    
+    OrderService --> OrderRepository : uses
+    OrderService --> UnitOfWork : uses
+    OrderRepository --> OrderMapper : uses
+    OrderMapper --> Order : maps
+    Order --> OrderItem : contains
