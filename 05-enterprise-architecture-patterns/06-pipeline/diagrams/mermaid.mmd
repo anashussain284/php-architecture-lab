@@ -1,0 +1,57 @@
+classDiagram
+    class Pipeline {
+        -array $pipes
+        +send(payload): self
+        +through(pipes): self
+        +then(callback): mixed
+        +thenReturn(): mixed
+    }
+    
+    class Stage {
+        <<interface>>
+        +handle(payload, next): mixed
+    }
+    
+    class ValidateOrderStage {
+        +handle(payload, next): mixed
+    }
+    
+    class CheckInventoryStage {
+        +handle(payload, next): mixed
+    }
+    
+    class ProcessPaymentStage {
+        +handle(payload, next): mixed
+    }
+    
+    class UpdateOrderStage {
+        +handle(payload, next): mixed
+    }
+    
+    class SendEmailStage {
+        +handle(payload, next): mixed
+    }
+    
+    class SendNotificationStage {
+        +handle(payload, next): mixed
+    }
+    
+    class UpdateAnalyticsStage {
+        +handle(payload, next): mixed
+    }
+    
+    class PipelineDispatcher {
+        -array $stages
+        +addStage(stage): self
+        +process(payload): mixed
+    }
+    
+    Stage <|-- ValidateOrderStage : implements
+    Stage <|-- CheckInventoryStage : implements
+    Stage <|-- ProcessPaymentStage : implements
+    Stage <|-- UpdateOrderStage : implements
+    Stage <|-- SendEmailStage : implements
+    Stage <|-- SendNotificationStage : implements
+    Stage <|-- UpdateAnalyticsStage : implements
+    Pipeline --> Stage : uses
+    PipelineDispatcher --> Stage : uses
